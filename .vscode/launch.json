@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Build and Run",
+      "type": "cppdbg",
+      "request": "launch",
+      "preLaunchTask": "builder",
+      "program": "${fileDirname}/output/${fileBasenameNoExtension}.exe",
+      "args": [],
+      "cwd": "${fileDirname}",
+      "externalConsole": true,
+      "stopAtEntry": false,
+      "MIMode": "gdb"
+    }
+  ]
+}

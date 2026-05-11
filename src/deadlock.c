@@ -92,4 +92,46 @@ int dl_detect(DeadlockState *dl, int safe_seq[DL_MAX_THREADS]){
 
         }
     }
+    //check that all threads finished
+    for (int i = 0; i<n;i++){
+        if (!finish[i]) return 1;
+    }
+    return 0;
+}
+
+void dl_print_state(const DeadlockState *dl) {
+    int n=dl->n_threads, m=dl->n_resources;
+    printf("\n%s+-- Resource Allocation State --%s\n",MAGENTA,RESET);
+    printf("| Available: ");
+    for (int j=0;j<m;j++) printf("%s=%d  ",dl->res_name[j],dl->available[j]);
+    printf("\n+--\n");
+    printf("| %-8s","Thread");
+    for (int j=0;j<m;j++) printf("  Alloc[%s]",dl->res_name[j]);
+    printf("  |");
+    for (int j=0;j<m;j++) printf("  Need[%s]",dl->res_name[j]);
+    printf("\n");
+    for (int i=0;i<n;i++) {
+        printf("| %-8s",dl->thread_name[i]);
+        for (int j=0;j<m;j++) printf("  %9d",dl->allocation[i][j]);
+        printf("  |");
+        for (int j=0;j<m;j++) printf("  %8d",dl->request[i][j]);
+        printf("\n");
+    }
+    printf("%s+----------------------------------------------+%s\n\n",MAGENTA,RESET);
+}
+
+
+
+void dl_print_result(int deadlocked, int safe_seq[DL_MAX_THREADS], int n) {
+    if (deadlocked) {
+        printf("%s+-- DEADLOCK DETECTED ---------%s\n",RED,RESET);
+        printf("| System is in an UNSAFE state.\n");
+        printf("| One or more threads are permanently blocked.\n");
+        printf("%s+------------------------------%s\n\n",RED,RESET);
+    } else {
+        printf("%s+-- SAFE STATE ---------------%s\n",GREEN,RESET);
+        printf("| Safe sequence: ");
+        for (int i=0;i<n;i++) { printf("T%d",safe_seq[i]); if(i<n-1) printf(" -> "); }
+        printf("\n%s+-----------------------------%s\n\n",GREEN,RESET);
+    }
 }

@@ -135,3 +135,41 @@ void dl_print_result(int deadlocked, int safe_seq[DL_MAX_THREADS], int n) {
         printf("\n%s+-----------------------------%s\n\n",GREEN,RESET);
     }
 }
+
+
+/*
+test cases  to run
+  */
+void dl_demo_no_deadlock(DeadlockState *dl) {
+    /*
+     * 3 threads, 2 resource types.
+     * Available: R0=2  R1=1
+     *
+     *       Allocation    Need/Request
+     * T0:   R0=1  R1=0   R0=0  R1=1     <- T0 can run (0<=2, 1<=1) -> Work=3,1
+     * T1:   R0=0  R1=1   R0=1  R1=0     <- T1 can run (1<=3, 0<=1) -> Work=3,2
+     * T2:   R0=1  R1=0   R0=0  R1=2     <- T2 can run (0<=3, 2<=2) -> done
+     * Safe sequence: T0 -> T1 -> T2
+     */
+    dl_init(dl,3,2);
+    strncpy(dl->res_name[0],"R0",MAX_NAME);
+    strncpy(dl->res_name[1],"R1",MAX_NAME);
+    dl_set_available(dl,0,2); dl_set_available(dl,1,1);
+    dl_set_allocation(dl,0,0,1); dl_set_allocation(dl,0,1,0);
+    dl_set_allocation(dl,1,0,0); dl_set_allocation(dl,1,1,1);
+    dl_set_allocation(dl,2,0,1); dl_set_allocation(dl,2,1,0);
+    dl_set_request(dl,0,0,0); dl_set_request(dl,0,1,1);
+    dl_set_request(dl,1,0,1); dl_set_request(dl,1,1,0);
+    dl_set_request(dl,2,0,0); dl_set_request(dl,2,1,2);
+}
+ 
+void dl_demo_deadlock(DeadlockState *dl) {
+    dl_init(dl,2,2);
+    strncpy(dl->res_name[0],"Mutex0",MAX_NAME);
+    strncpy(dl->res_name[1],"Mutex1",MAX_NAME);
+    dl_set_available(dl,0,0); dl_set_available(dl,1,0); //set resource units r0=0,r1=0
+    dl_set_allocation(dl,0,0,1); dl_set_allocation(dl,0,1,0); //t0 resource unit allocations
+    dl_set_request(dl,0,0,0);   dl_set_request(dl,0,1,1);//t0 unit requested unit 1 from r1
+    dl_set_allocation(dl,1,0,0); dl_set_allocation(dl,1,1,1);
+    dl_set_request(dl,1,0,1);   dl_set_request(dl,1,1,0);
+}

@@ -45,7 +45,7 @@ static void run_scheduler_demo(void) {
     printf("    2) Stride (priority-based)\n\n");
 
     int algo_choice = read_int("  Choice [1-2]: ", 1, 2);
-    SchedAlgo algo  = (algo_choice == 2) ? SCHED_STRIDE : SCHED_RR;
+    SchedAlgo algo  = (algo_choice == 2) ? SCHD_STRIDE : SCHED_RR;
     int ts = read_int("  Time slice size (1-10 ticks): ", 1, 10);
 
     Scheduler s;
@@ -61,7 +61,7 @@ static void run_scheduler_demo(void) {
         flush_stdin();
         int burst   = read_int("  CPU burst (1-20): ", 1, 20);
         int arrival = read_int("  Arrival time  (0-10): ", 0, 10);
-        int priority = (algo == SCHED_STRIDE)
+        int priority = (algo == SCHD_STRIDE)
                            ? read_int("  Priority (2-32): ", 2, 32) : 16;
         sched_add_process(&s, name, burst, arrival, priority);
     }

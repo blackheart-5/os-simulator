@@ -10,7 +10,7 @@ void pt_pool_init(PhysMemPool *pool){
 }
 
 
-void pt_pool_alloc(PhysMemPool *pool){
+int pt_pool_alloc(PhysMemPool *pool){
     for (int i=0; i<pool->total_frames; i++){
         if (pool->used[i] == 0){
             pool->used[i] = 1;
@@ -21,7 +21,7 @@ void pt_pool_alloc(PhysMemPool *pool){
     return -1;
 }
 
-void pt_pool_free(PhysMemPool *pool, int thread, int frame){
+void pt_pool_free(PhysMemPool *pool, int frame){
     if(frame>=0 && frame < pool->total_frames && pool->used[frame]){
         pool->used[frame] = 0;
         pool->free_frames++;
@@ -46,10 +46,10 @@ void pt_init(AddrSpace *as,PhysMemPool *pool, int pid){
     as->root = calloc(1,sizeof(PageTable));
 }
 
-static pte_t(AddrSpace *as, int alloc, u32 vpn){
+static pte_t *walk(AddrSpace *as, int alloc, u32 vpn){
     PageTable *table = as->root;
     for(int level=2;level>0;level--){
-        int idx = ((vpn >> (level*VPN_BITS))) & (PTE_COUNT-1)
+        int idx = ((vpn >> (level*VPN_BITS))) & (PTE_COUNT-1);
         pte_t *pte = &table->entries[idx];//grab a pointer to that specific entry.
         if(*pte && PTE_V){
             //shift bits to get the physical page number and <<12 to covert that number to full address
@@ -124,7 +124,7 @@ i64 pt_translate(AddrSpace *as, u32 va, u32 access_flags) {
 
 void pt_free(AddrSpace *as){
     free(as->root);
-    as->root = NUL;
+    as->root = NULL;
 }
 
 int pt_mmap(AddrSpace *as, u32 va_start, u32 len, u32 flags) {

@@ -70,14 +70,15 @@ static void gantt_push(int pid, const char *name, int start, int end) {
     gantt[gantt_len].pid = pid;
     gantt[gantt_len].start = start;
     gantt[gantt_len].end = end;
-    strncpy(gantt[gantt_len].name, name, MAX_NAME-1);
+    snprintf(gantt[gantt_len].name, MAX_NAME, "%s", name);
+    // gantt[gantt_len].name[MAX_NAME-1] = '\0';
     gantt_len++;
 }
 
 void sched_run(Scheduler *s) {
     gantt_len = 0;
     printf("\n%s+-- Scheduler Running --%s\n", CYAN, RESET);
-    const char *aname = (s->algo == SCHED_STRIDE) ? "Stride" : "Round-Robin";
+    const char *aname = (s->algo == SCHD_STRIDE) ? "Stride" : "Round-Robin";
     printf("  Algorithm: %s%s%s   Time-slice: %d\n\n", BOLD, aname, RESET, s->time_slice);
 
     int remaining = s->proc_count;
@@ -89,10 +90,10 @@ void sched_run(Scheduler *s) {
                 printf("  %s[t=%3d]%s  %-10s arrived\n", GRAY, s->clock, RESET, p->name);
             }
         }
-        PCB *cur = (s->algo == SCHED_STRIDE) ? stride_pick(s) : rr_pick(s);
+        PCB *cur = (s->algo == SCHD_STRIDE) ? stride_pick(s) : rr_pick(s);
         if (!cur) { s->clock++; continue; }
 
-        cur->state = RUNNING;
+        cur->state = RUNNABLE;
         s->current_pid = cur->pid;
         int ticks = (cur->remaining_burst < s->time_slice) ? cur->remaining_burst : s->time_slice;
         int t0 = s->clock;

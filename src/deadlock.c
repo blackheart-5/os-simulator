@@ -6,7 +6,7 @@ void dl_init(DeadlockState *dl, int n_threads, int n_resources){
     memset(dl, 0, sizeof(*dl)); //clear the entire deadlock structures to zero
     dl->n_threads = n_threads;
     dl->n_resources = n_resources;
-    dl->enabled = 1;
+    dl->enables = 1;
 
     //print thread name
     for (int i = 0; i<n_threads; i++){
@@ -24,9 +24,9 @@ void dl_set_available(DeadlockState *dl, int res, int count){
     }
 }
 
-void dl_set_allocation(Deadlock *dl, int thread, int res, int count){
+void dl_set_allocation(DeadlockState *dl, int thread, int res, int count){
     //check thread is valid --> row
-    if (t >= 0 && t < dl->n_threads){
+    if (thread >= 0 && thread < dl->n_threads){
         //check resource is valid --> column
         if (res >= 0 && res < dl->n_resources){
             dl->allocation[thread][res] = count; //allocate units of this resource this threads needs
@@ -36,10 +36,10 @@ void dl_set_allocation(Deadlock *dl, int thread, int res, int count){
 
 void dl_set_request(DeadlockState *dl, int thread, int res, int count){
     //check thread is valid --> row
-    if (t >= 0 && t < dl->n_threads){
+    if (thread >= 0 && thread < dl->n_threads){
         //check resource is valid --> column
         if (res >= 0 && res < dl->n_resources){
-            dl->request[thread][res] = count; //set units of this resource this threads needs
+            dl->requests[thread][res] = count; //set units of this resource this threads needs
         }
     }
 }
@@ -68,7 +68,7 @@ int dl_detect(DeadlockState *dl, int safe_seq[DL_MAX_THREADS]){
     while (progress){
         progress = 0;
 
-        for (int i = 0; i < n_threads; i++){
+        for (int i = 0; i < dl->n_threads; i++){
             if (finish[i]) continue; //thread is finished so skip
 
             int ok = 1;
@@ -114,7 +114,7 @@ void dl_print_state(const DeadlockState *dl) {
         printf("| %-8s",dl->thread_name[i]);
         for (int j=0;j<m;j++) printf("  %9d",dl->allocation[i][j]);
         printf("  |");
-        for (int j=0;j<m;j++) printf("  %8d",dl->request[i][j]);
+        for (int j=0;j<m;j++) printf("  %8d",dl->requests[i][j]);
         printf("\n");
     }
     printf("%s+----------------------------------------------+%s\n\n",MAGENTA,RESET);

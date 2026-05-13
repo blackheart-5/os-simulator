@@ -50,7 +50,7 @@ void dl_set_request(DeadlockState *dl, int thread, int res, int count){
 int dl_detect(DeadlockState *dl, int safe_seq[DL_MAX_THREADS]){
     int work[DL_MAX_RESOURCES];
     int finish[DL_MAX_THREADS];
-    int finished_thread = 0;
+
     int n = dl->n_threads;
     int m = dl->n_resources;
 

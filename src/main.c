@@ -12,11 +12,10 @@ static void print_banner(void) {
     printf("\n");
     printf("%s%s", CYAN, BOLD);
     printf("  +-------------------------------------------------+\n");
-    printf("  |          OS CONCEPTS SIMULATOR  v1.0           |\n");
+    printf("  |          SIMPLE OS SIMULATOR  v1.0           |\n");
     printf("  |  Processes | Virtual Memory | IPC | Deadlock   |\n");
     printf("  +-------------------------------------------------+\n");
     printf("%s", RESET);
-    printf("%s  Built on concepts from CSE 410 (uCore RISC-V OS)%s\n\n", GRAY, RESET);
 }
 
 static void separator(void) {

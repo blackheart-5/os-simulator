@@ -71,6 +71,7 @@ static void gantt_push(int pid, const char *name, int start, int end) {
     gantt[gantt_len].start = start;
     gantt[gantt_len].end = end;
     snprintf(gantt[gantt_len].name, MAX_NAME, "%s", name);
+    //strncpy(gantt\[gantt_len\].name, name, MAX_NAME-1)
     // gantt[gantt_len].name[MAX_NAME-1] = '\0';
     gantt_len++;
 }

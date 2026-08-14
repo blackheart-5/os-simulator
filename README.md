@@ -1,5 +1,9 @@
 # OS Concepts Simulator
 
+<img width="1905" height="1097" alt="image" src="https://github.com/user-attachments/assets/8bc588e5-e59e-4c71-bf80-08ead8e4c328" />
+
+<img width="1401" height="1048" alt="image" src="https://github.com/user-attachments/assets/7cf8dd90-b363-4b6c-b447-372ae84bd8d4" />
+
 A terminal-based operating system concepts simulator written in C, demonstrating core OS mechanisms from process scheduling to virtual memory management. Built as a portfolio project to showcase systems programming knowledge.
 
 ## Table of Contents

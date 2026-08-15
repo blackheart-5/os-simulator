@@ -1,6 +1,7 @@
 # OS Concepts Simulator
 
-<img width="1609" height="1069" alt="image" src="https://github.com/user-attachments/assets/da3b1634-99ba-4240-a37c-34492e137c2c" />
+<img width="1780" height="885" alt="image" src="https://github.com/user-attachments/assets/1a243827-63c4-4705-bdc3-d3d9b6ab181e" />
+
 
 <img width="1401" height="1048" alt="image" src="https://github.com/user-attachments/assets/7cf8dd90-b363-4b6c-b447-372ae84bd8d4" />
 

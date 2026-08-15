@@ -28,10 +28,10 @@ A terminal-based operating system concepts simulator written in C, demonstrating
 
 | Module | Concept | Course Equivalent |
 |---|---|---|
-| Process Scheduler | Round-Robin & Stride scheduling, PCB, Gantt chart | Ch. 3 — Multiprogramming |
-| Virtual Memory | SV39 3-level page table, mmap/munmap, frame pool | Ch. 4 — Address Spaces |
-| Deadlock Detection | Banker's safety algorithm, resource allocation | Ch. 8 — Concurrency |
-| Pipes & IPC | Ring-buffer pipes, file descriptors, producer/consumer | Ch. 7 — IPC |
+| Process Scheduler | Round-Robin & Stride scheduling, PCB, Gantt chart | 
+| Virtual Memory | SV39 3-level page table, mmap/munmap, frame pool | 
+| Deadlock Detection | Banker's safety algorithm, resource allocation |
+| Pipes & IPC | Ring-buffer pipes, file descriptors, producer/consumer |
 
 ---
 
@@ -205,6 +205,4 @@ Real OS components are tightly coupled. Running all modules from a single proces
 
 ## Background
 
-Built after completing CSE 410 (Operating Systems) at Michigan State University, which used the [uCore-Tutorial](https://github.com/rcore-os/rCore-Tutorial-v3) RISC-V OS as a teaching platform. Each module in this simulator corresponds directly to a lab from that course.
-
-The goal was to rebuild the core algorithms from scratch — without copying course code — to demonstrate genuine understanding of the underlying mechanisms.
+Built after completing CSE 410 (Operating Systems) at Michigan State University, which used the [uCore-Tutorial](https://github.com/rcore-os/rCore-Tutorial-v3) RISC-V OS as a teaching platform.
